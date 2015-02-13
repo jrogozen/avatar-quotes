@@ -9,14 +9,26 @@ var Quote = React.createClass({
         <h2 className="quoteAuthor">
           {this.props.author}
         </h2>
-          {this.props.content}
+        <p>{this.props.content}</p>
+        <p>Book {this.props.book}, "{this.props.episode}"</p>
       </div>
     );
   }
 });
 
+var QuoteForm = React.createClass({
+  handleClick: function() {
+    this.props.onClick(this);
+  },
+  render: function() {
+    return (
+      <button onClick={this.handleClick}>Next</button>
+    );
+  }
+});
+
 var QuoteBox = React.createClass({
-  loadQuotesFromServer: function() {
+  loadQuoteFromServer: function() {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -28,16 +40,21 @@ var QuoteBox = React.createClass({
       }.bind(this)
     });
   },
+  handleClick: function(child) {
+    this.loadQuoteFromServer();
+  },
   getInitialState: function() {
     return {data: []};
   },
   componentDidMount: function() {
-    this.loadQuotesFromServer();
-    // setInterval(this.loadQuotesFromServer, 5000);
+    this.loadQuoteFromServer();
   },
   render: function() {
     return (
-      <Quote author={this.state.data.author} content={this.state.data.content}/>
+      <div>
+        <Quote author={this.state.data.author} content={this.state.data.content} book={this.state.data.book} episode={this.state.data.episode}/>
+        <QuoteForm onClick={this.handleClick}/>
+      </div>
     );
   }
 });

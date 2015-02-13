@@ -4,9 +4,24 @@ var express = require('express'),
   app = express();
 
 var quotes = [
-  {author: 'Zahir', content: 'Accept what happend to you, don\'t fear what might have been.'},
-  {author: 'Zahir', content: 'You think your power has limits, I say, it\'s limitless.'},
-  {author: 'Zahir', content: 'I learned to fly but now I\'m bound by chains.  You have all the power in the world and the freedom to use it. But you choose to hold yourself down.'}
+  {
+    author: 'Zahir', 
+    content: 'Accept what happend to you, don\'t fear what might have been.',
+    book: '4',
+    episode: 'Behind the Vines',
+  },
+  {
+    author: 'Zahir', 
+    content: 'You think your power has limits, I say, it\'s limitless.',
+    book: '4',
+    episode: 'Behind the Vines'
+  },
+  {
+    author: 'Zahir', 
+    content: 'I learned to fly but now I\'m bound by chains.  You have all the power in the world and the freedom to use it. But you choose to hold yourself down.',
+    book: '4',
+    episode: 'Behind the Vines'
+  }
 ];
 
 app.use(morgan('combined'));
