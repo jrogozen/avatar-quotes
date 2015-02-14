@@ -32,6 +32,9 @@ var QuoteBox = React.createClass({
     $.ajax({
       url: this.props.url,
       dataType: 'json',
+      data: {
+        "quote": this.state.data
+      },
       success: function(data) {
         this.setState({data: data});
       }.bind(this),
