@@ -11,8 +11,6 @@ var iconBank = {
   asami: 'http://vignette1.wikia.nocookie.net/avatar/images/b/b6/Asami_Sato.png/revision/latest?cb=20141114200538'
 };
 
-
-
 function Quote(data) {
   this._id = quotes.length;
   this.author = Helpers.capitalizeAll(data.author);

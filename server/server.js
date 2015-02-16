@@ -13,8 +13,6 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({extended: true}));
 
-console.log(__dirname);
-
 app.use(express.static(__dirname + '../../public'));
 
 app.get('/api/quotes', function(req, res) {
