@@ -1,7 +1,7 @@
 /**
  * @jsx React.DOM
  */
- 
+
 var Quote = React.createClass({
   render: function() {
     return (
@@ -9,6 +9,7 @@ var Quote = React.createClass({
         <h2 className="quoteAuthor">
           {this.props.author}
         </h2>
+        {this.props.icon ? <p><img src={this.props.icon}/></p> : null}
         <p>{this.props.content}</p>
         <p>Book {this.props.book}, "{this.props.episode}"</p>
       </div>
@@ -50,6 +51,9 @@ var QuoteForm = React.createClass({
       }.bind(this)
     });
   },
+  handleQuoteCancel: function() {
+    this.setState({ showQuoteAdd: false });
+  },
   render: function() {
     return (
       <div>
@@ -57,7 +61,7 @@ var QuoteForm = React.createClass({
       {this.state.showError ? <div className="alert error">Quote failed to add</div> : null}
       <button onClick={this.handleClick}>Next</button>
       <button onClick={this.showQuoteAdd}>Add Quote</button>
-      {this.state.showQuoteAdd ? <QuoteAdd handleQuoteSubmit={this.handleQuoteSubmit} /> : null }
+      {this.state.showQuoteAdd ? <QuoteAdd handleQuoteSubmit={this.handleQuoteSubmit} handleQuoteCancel={this.handleQuoteCancel}/> : null }
       </div>
     );
   }
@@ -76,6 +80,9 @@ var QuoteAdd = React.createClass({
     this.props.handleQuoteSubmit({author: author, content: content, book: book, episode: episode})
     return false;
   },
+  handleCancel: function() {
+    this.props.handleQuoteCancel();
+  },
   render: function() {
     return (
       <form onSubmit={this.handleSubmit}>
@@ -85,6 +92,7 @@ var QuoteAdd = React.createClass({
         <input type="text" placeholder="Book number" ref="book" />
         <input type="text" placeholder="Episode name" ref="episode" />
         <input type="submit" value="Save"/>
+        <button onClick={this.handleCancel}>Cancel</button>
       </form>
     )
   }
@@ -118,7 +126,7 @@ var QuoteBox = React.createClass({
   render: function() {
     return (
       <div>
-        <Quote author={this.state.data.author} content={this.state.data.content} book={this.state.data.book} episode={this.state.data.episode}/>
+        <Quote author={this.state.data.author} content={this.state.data.content} book={this.state.data.book} episode={this.state.data.episode} icon={this.state.data.icon}/>
         <QuoteForm onClick={this.handleClick} url="api/quotes"/>
       </div>
     );

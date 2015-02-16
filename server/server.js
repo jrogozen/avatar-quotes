@@ -4,36 +4,8 @@ var express = require('express'),
   app = express(),
   _ = require('underscore');
 
-var quotes = [
-  {
-    _id: 0,
-    author: 'Zahir', 
-    content: 'Accept what happend to you, don\'t fear what might have been.',
-    book: '4',
-    episode: 'Behind the Vines',
-  },
-  {
-    _id: 1,
-    author: 'Zahir', 
-    content: 'You think your power has limits, I say, it\'s limitless.',
-    book: '4',
-    episode: 'Behind the Vines'
-  },
-  {
-    _id: 2,
-    author: 'Zahir', 
-    content: 'I learned to fly but now I\'m bound by chains.  You have all the power in the world and the freedom to use it. But you choose to hold yourself down.',
-    book: '4',
-    episode: 'Behind the Vines'
-  },
-  {
-    _id: 3,
-    author: 'Korra',
-    content: 'I\'m the Avatar! You gotta deal with it!',
-    book: '1',
-    episode: 'Welcome to Republic City'
-  }
-];
+var Quote = require('./quote.model');
+var quotes = require('./quotes');
 
 app.use(morgan('combined'));
 
@@ -46,8 +18,7 @@ console.log(__dirname);
 app.use(express.static(__dirname + '../../public'));
 
 app.get('/api/quotes', function(req, res) {
-  res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify(quotes));
+  res.status(200).send(JSON.stringify(quotes));
 });
 
 app.get('/api/quotes/random', function(req, res) {
@@ -62,17 +33,15 @@ app.get('/api/quotes/random', function(req, res) {
   } else {
     quote = quotes[Math.floor(Math.random()*(quotes.length))];
   }
-  
-  res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify(quote));
+
+  res.status(200).send(JSON.stringify(quote));
 });
 
 app.post('/api/quotes', function(req, res) {
-  var quote = req.body.data;
-  quote._id = quotes.length;
+  var quote = new Quote(req.body.data);
+  quote.attachIcon();
   quotes.push(quote);
-  res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify(quote));
+  res.status(200).send(JSON.stringify(quote));
 });
 
 var port = process.env.PORT || 3000;
