@@ -2,6 +2,7 @@
 
 var _ = require('underscore');
 var quotes = require('./quotes');
+var Helpers = require('./helpers');
 
 var iconBank = {
   korra: 'http://vignette1.wikia.nocookie.net/avatar/images/c/ca/Korra.png/revision/latest?cb=20150127143653',
@@ -10,12 +11,14 @@ var iconBank = {
   asami: 'http://vignette1.wikia.nocookie.net/avatar/images/b/b6/Asami_Sato.png/revision/latest?cb=20141114200538'
 };
 
+
+
 function Quote(data) {
   this._id = quotes.length;
-  this.author = data.author;
+  this.author = Helpers.capitalizeAll(data.author);
   this.content = data.content;
   this.book = data.book;
-  this.episode = data.episode;
+  this.episode = Helpers.capitalizeAll(data.episode);
 
   this.attachIcon = function() {
     var that = this;
