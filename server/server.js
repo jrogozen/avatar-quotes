@@ -65,7 +65,15 @@ app.get('/api/quotes/random', function(req, res) {
   
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify(quote));
-})
+});
+
+app.post('/api/quotes', function(req, res) {
+  var quote = req.body.data;
+  quote._id = quotes.length;
+  quotes.push(quote);
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify(quote));
+});
 
 var port = process.env.PORT || 3000;
 
